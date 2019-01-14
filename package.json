@@ -10,17 +10,24 @@
     "@babel/core": "^7.2.2",
     "@babel/node": "^7.2.2",
     "@babel/preset-env": "^7.2.3",
+    "@babel/register": "^7.0.0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^23.6.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^7.0.0-beta.3",
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.1",
+    "coveralls": "^3.0.2",
+    "dotenv": "^6.2.0",
     "eslint": "^5.12.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^3.3.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.12.3",
-    "nodemon": "^1.18.9"
+    "mocha": "^5.2.0",
+    "nodemon": "^1.18.9",
+    "nyc": "^13.1.0"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
@@ -30,8 +37,12 @@
   },
   "scripts": {
     "start:dev": "nodemon --exec babel-node src/app.js",
-    "start": "node dist/app.js",
+    "start": "NODE_ENV=production yarn build && node dist/app.js",
     "build": "babel src --out-dir dist",
-    "lint": "eslint ./src"
+    "lint": "eslint ./src --fix",
+    "test": "NODE_ENV=test nyc mocha --require @babel/register ./tests/*/**.spec.js",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "report-coverage": "cat ./coverage/lcov.info | coveralls",
+    "coveralls": "nyc --reporter=lcov --reporter=text-lcov npm test"
   }
 }

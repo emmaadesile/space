@@ -1,0 +1,17 @@
+language: node_js
+node_js:
+  - node
+
+services:
+  - postgresql
+
+before_script:
+  - psql -c 'create database space_test;' -U postgres
+
+script
+  - yarn test
+
+after_success:
+  - yarn coveralls
+  - yarn coverage
+  - yarn report-coverage
