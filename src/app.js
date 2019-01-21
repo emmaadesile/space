@@ -4,6 +4,11 @@ import logger from 'morgan';
 import http from 'http';
 import cors from 'cors';
 
+import routes from './routes';
+
+const router = express.Router();
+routes(router);
+
 // initiliase the express app
 const app = express();
 
@@ -20,10 +25,10 @@ app.set('port', port);
 // create the server
 const server = http.createServer(app);
 
-server.listen(port, () => console.log(`App is running on localhost:${port}`));
+// eslint-disable-next-line
+server.listen(port, () => console.log(`Space is running on localhost:${port}`));
 
-app.get('/', (req, res) =>
-  res.status(200).json({ status: 'success', message: 'Space launched' }),
-);
+app.use('/api/v1', router);
+routes(app);
 
 export default app;

@@ -18,25 +18,31 @@
     "chai": "^4.2.0",
     "chai-http": "^4.2.1",
     "coveralls": "^3.0.2",
-    "dotenv": "^6.2.0",
     "eslint": "^5.12.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^3.3.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.12.3",
+    "husky": "^1.3.1",
     "mocha": "^5.2.0",
     "nodemon": "^1.18.9",
     "nyc": "^13.1.0"
   },
   "dependencies": {
+    "bcrypt": "^3.0.3",
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
+    "dotenv": "^6.2.0",
     "express": "^4.16.4",
-    "morgan": "^1.9.1"
+    "morgan": "^1.9.1",
+    "pg": "^7.8.0",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.42.0",
+    "sequelize-cli": "^5.4.0"
   },
   "scripts": {
-    "start:dev": "nodemon --exec babel-node src/app.js",
+    "dev": "nodemon --exec babel-node src/app.js",
     "start": "NODE_ENV=production yarn build && node dist/app.js",
     "build": "babel src --out-dir dist",
     "lint": "eslint ./src --fix",
@@ -44,5 +50,11 @@
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "report-coverage": "cat ./coverage/lcov.info | coveralls",
     "coveralls": "nyc --reporter=lcov --reporter=text-lcov npm test"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint && yarn test",
+      "pre-push": "yarn test"
+    }
   }
 }
