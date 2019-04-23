@@ -65,7 +65,6 @@ const validateSignup = data => {
 const validateLogin = data => {
   const { email, password } = data;
   const error = {};
-  let isValid;
 
   if (!email) {
     error.email = 'Please enter your email';
